@@ -2,10 +2,38 @@ package com.example.homework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import com.example.homework.fragments.ContactDetailsFragment
+import com.example.homework.fragments.ContactFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ICommunicator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val contactFragment = ContactFragment()
+        supportFragmentManager.beginTransaction().replace(
+            R.id.fragmentContainer,contactFragment).commit()
+    }
+
+    override fun passData(name: String, number : String, email : String) {
+        val bundle = Bundle()
+        bundle.putString("name", name)
+        bundle.putString("number", number)
+        bundle.putString("email", email)
+
+        val transaction = this.supportFragmentManager.beginTransaction()
+        val contactDetailsFragment = ContactDetailsFragment()
+        contactDetailsFragment.arguments = bundle
+
+        transaction.replace(R.id.fragmentContainer,contactDetailsFragment)
+        transaction.commit()
+    }
+
+    fun buckClick(view: View) {
+        val contactFragment = ContactFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,contactFragment)
+            .commit()
     }
 }
