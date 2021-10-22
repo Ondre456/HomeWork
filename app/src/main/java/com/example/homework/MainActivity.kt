@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import com.example.homework.fragments.ContactDetailsFragment
 import com.example.homework.fragments.ContactFragment
 
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity(), ICommunicator {
         val contactFragment = ContactFragment()
         supportFragmentManager.beginTransaction().replace(
             R.id.fragmentContainer,contactFragment).commit()
+        this.findViewById<TextView>(R.id.heading).text = "Список контактов"
     }
 
     override fun passData(name: String, number : String, email : String) {
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity(), ICommunicator {
 
         transaction.replace(R.id.fragmentContainer,contactDetailsFragment)
         transaction.commit()
+        this.findViewById<TextView>(R.id.heading).text = "Детали контакта"
     }
 
     fun buckClick(view: View) {
@@ -35,5 +38,6 @@ class MainActivity : AppCompatActivity(), ICommunicator {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer,contactFragment)
             .commit()
+        this.findViewById<TextView>(R.id.heading).text = "Список контактов"
     }
 }
