@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.homework.ICommunicator
 import com.example.homework.R
@@ -40,7 +41,7 @@ class ContactFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_contact, container, false)
         communicator = activity as ICommunicator
-
+        view.findViewById<ImageView>(R.id.avatar).setImageResource(R.drawable.avatar)
         view.setOnClickListener {
             val name = view.findViewById<TextView>(R.id.nameBox).text.toString()
             val number = view.findViewById<TextView>(R.id.numberBox).text.toString()

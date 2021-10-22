@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.homework.Contact
 import com.example.homework.ICommunicator
@@ -46,6 +47,7 @@ class ContactDetailsFragment : Fragment() {
         view.findViewById<TextView>(R.id.nameBox).text = name
         view.findViewById<TextView>(R.id.Phone).text = number
         view.findViewById<TextView>(R.id.EmailAddress).text = email
+        view.findViewById<ImageView>(R.id.avatar).setImageResource(R.drawable.avatar)
 
         return view
     }
