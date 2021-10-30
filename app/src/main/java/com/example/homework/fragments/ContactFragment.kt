@@ -1,5 +1,7 @@
 package com.example.homework.fragments
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,60 +9,65 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.homework.ICommunicator
+import com.example.homework.ContactClickListener
 import com.example.homework.R
+import com.example.homework.databinding.FragmentContactDetailsBinding
+import com.example.homework.databinding.FragmentContactBinding as FragmentContactBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContactFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ContactFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var communicator : ICommunicator
-    private var contactId : Int = 0
+    private var communicator: ContactClickListener? = null
+    private var binding : FragmentContactBinding? = null
+    private var contactId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ContactClickListener) {
+            communicator = context
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        communicator = null
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_contact, container, false)
-        communicator = activity as ICommunicator
-        view.findViewById<ImageView>(R.id.avatar).setImageResource(R.drawable.avatar)
+        val view = inflater.inflate(R.layout.fragment_contact, container, false)
+        communicator = activity as ContactClickListener
+        binding = FragmentContactBinding
+            .bind(view).apply {
+                avatar.setImageResource(R.drawable.avatar)
+                nameBox.text = "Иван Иванов"
+                numberBox.text = "89888889898"
+            }
+
         view.setOnClickListener {
-            val name = view.findViewById<TextView>(R.id.nameBox).text.toString()
-            val number = view.findViewById<TextView>(R.id.numberBox).text.toString()
-            communicator.passData(name,number,"firstcontact@gmail.com")
+            communicator!!.onClick(contactId)
         }
 
         return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ContactFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ContactFragment().apply {

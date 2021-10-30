@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="140dp"
-    tools:context=".fragments.ContactFragment"
     android:background="@drawable/border"
-    android:onClick="OnViewClick">
+    android:onClick="OnViewClick"
+    tools:context=".fragments.ContactFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,27 +17,29 @@
             android:id="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="0dp"
-            android:paddingStart="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:ems="10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"/>
 
         <TextView
             android:id="@+id/nameBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="0dp"
-            android:paddingStart="5dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/avatar"
             android:background="@drawable/border"
             android:paddingBottom="30dp"
-            android:text="Иван Иванов"
-            android:layout_toRightOf="@id/avatar"
             app:layout_constraintLeft_toRightOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,15 +48,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/nameBox"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toEndOf="@id/avatar"
             android:background="@drawable/border"
-            android:layout_toRightOf="@id/avatar"
-            android:layout_marginTop="15dp"
-            android:layout_margin="10dp"
-            android:text="89888889898"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
-            app:layout_constraintTop_toBottomOf="@id/nameBox"/>
+            app:layout_constraintLeft_toRightOf="@id/avatar"
+            app:layout_constraintTop_toBottomOf="@id/nameBox" />
 
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

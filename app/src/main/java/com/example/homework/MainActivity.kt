@@ -5,39 +5,39 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.example.homework.databinding.FragmentContactDetailsBinding
 import com.example.homework.fragments.ContactDetailsFragment
 import com.example.homework.fragments.ContactFragment
 
-class MainActivity : AppCompatActivity(), ICommunicator {
+class MainActivity : AppCompatActivity(), ContactClickListener {
+    override val Contacts = listOf<Contact>(
+        Contact("Иван Иванов", "89888889898","firstcontact@gmail.com")
+       )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val contactFragment = ContactFragment()
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragmentContainer,contactFragment).commit()
-        this.findViewById<TextView>(R.id.heading).text = "Список контактов"
+        if (savedInstanceState == null) {
+            val contactFragment = ContactFragment()
+            supportFragmentManager.beginTransaction().replace(
+                R.id.fragmentContainer, contactFragment
+            ).commit()
+        }
+
+        supportActionBar?.title = getString(R.string.contactDetails)
     }
 
-    override fun passData(name: String, number : String, email : String) {
+    override fun onClick(id : Int) {
         val bundle = Bundle()
-        bundle.putString("name", name)
-        bundle.putString("number", number)
-        bundle.putString("email", email)
+        bundle.putInt("id", id)
 
         val transaction = this.supportFragmentManager.beginTransaction()
         val contactDetailsFragment = ContactDetailsFragment()
         contactDetailsFragment.arguments = bundle
 
-        transaction.replace(R.id.fragmentContainer,contactDetailsFragment)
+        transaction.replace(R.id.fragmentContainer, contactDetailsFragment)
         transaction.commit()
-        this.findViewById<TextView>(R.id.heading).text = "Детали контакта"
-    }
+        transaction.addToBackStack(null)
 
-    fun buckClick(view: View) {
-        val contactFragment = ContactFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer,contactFragment)
-            .commit()
-        this.findViewById<TextView>(R.id.heading).text = "Список контактов"
+        supportActionBar?.title = getString(R.string.contactDetails)
     }
 }

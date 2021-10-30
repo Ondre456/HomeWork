@@ -1,31 +1,26 @@
 package com.example.homework.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.homework.Contact
-import com.example.homework.ICommunicator
+import com.example.homework.ContactClickListener
+import com.example.homework.MainActivity
 import com.example.homework.R
+import com.example.homework.databinding.FragmentContactDetailsBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContactDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ContactDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    var binding : FragmentContactDetailsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,39 +30,46 @@ class ContactDetailsFragment : Fragment() {
         }
     }
 
+    private var contactId = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_contact_details, container, false)
+        val view = inflater.inflate(R.layout.fragment_contact_details, container, false)
+        contactId = arguments?.getInt("id")!!
+        binding = FragmentContactDetailsBinding
+            .bind(view).apply {
+                val contact =(activity as ContactClickListener).Contacts[contactId]
+                nameBox.text = contact.name
+                Phone.text = contact.number
+                EmailAddress.text = contact.email
+                avatar.setImageResource(R.drawable.avatar)
 
-        val name = arguments?.getString("name")
-        val number = arguments?.getString("number")
-        val email = arguments?.getString("email")
-        view.findViewById<TextView>(R.id.nameBox).text = name
-        view.findViewById<TextView>(R.id.Phone).text = number
-        view.findViewById<TextView>(R.id.EmailAddress).text = email
-        view.findViewById<ImageView>(R.id.avatar).setImageResource(R.drawable.avatar)
+                backButton.setOnClickListener {
+                    val contactFragment = ContactFragment()
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.fragmentContainer,contactFragment)
+                        ?.commit()
+                    ( activity as MainActivity)
+                        .supportActionBar?.title = getString(R.string.contactsList)
+                }
+        }
 
         return view
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ContactDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(id: Int) =
             ContactDetailsFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }
