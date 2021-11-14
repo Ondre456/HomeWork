@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.homework.databinding.FragmentContactDetailsBinding
 import com.example.homework.fragments.ContactDetailsFragment
 import com.example.homework.fragments.ContactFragment
 
 class MainActivity : AppCompatActivity(), ContactClickListener {
-    override val Contacts = listOf<Contact>(
-        Contact("Иван Иванов", "89888889898","firstcontact@gmail.com")
-       )
+    override val contacts = listOf<Contact>(
+        Contact("Иван Иванов", "89888889898", "firstcontact@gmail.com")
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity(), ContactClickListener {
             ).commit()
         }
 
-        supportActionBar?.title = getString(R.string.contactDetails)
+        supportActionBar?.title = getString(R.string.contactsList)
     }
 
-    override fun onClick(id : Int) {
+    override fun onClick(id: Int) {
         val bundle = Bundle()
         bundle.putInt("id", id)
 

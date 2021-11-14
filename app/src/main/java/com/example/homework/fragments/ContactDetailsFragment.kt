@@ -13,48 +13,33 @@ import com.example.homework.MainActivity
 import com.example.homework.R
 import com.example.homework.databinding.FragmentContactDetailsBinding
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class ContactDetailsFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
 
-    var binding : FragmentContactDetailsBinding? = null
+    var binding: FragmentContactDetailsBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    private var contactId = 0
+    private var contactId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_contact_details, container, false)
-        contactId = arguments?.getInt("id")!!
+        contactId = arguments?.getInt("id")
         binding = FragmentContactDetailsBinding
             .bind(view).apply {
-                val contact =(activity as ContactClickListener).Contacts[contactId]
+                val contact = (activity as ContactClickListener).contacts[contactId as Int]
                 nameBox.text = contact.name
-                Phone.text = contact.number
-                EmailAddress.text = contact.email
+                phone.text = contact.number
+                emailAddress.text = contact.email
                 avatar.setImageResource(R.drawable.avatar)
 
                 backButton.setOnClickListener {
-                    val contactFragment = ContactFragment()
-                    activity?.supportFragmentManager?.beginTransaction()
-                        ?.replace(R.id.fragmentContainer,contactFragment)
-                        ?.commit()
-                    ( activity as MainActivity)
+                    parentFragmentManager.popBackStack()
+
+                    (activity as MainActivity)
                         .supportActionBar?.title = getString(R.string.contactsList)
                 }
-        }
+            }
 
         return view
     }
@@ -62,15 +47,5 @@ class ContactDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(id: Int) =
-            ContactDetailsFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

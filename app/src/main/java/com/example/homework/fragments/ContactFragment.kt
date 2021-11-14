@@ -14,20 +14,10 @@ import com.example.homework.R
 import com.example.homework.databinding.FragmentContactDetailsBinding
 import com.example.homework.databinding.FragmentContactBinding as FragmentContactBinding
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class ContactFragment : Fragment() {
     private var communicator: ContactClickListener? = null
-    private var binding : FragmentContactBinding? = null
+    private var binding: FragmentContactBinding? = null
     private var contactId: Int = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -56,7 +46,7 @@ class ContactFragment : Fragment() {
             }
 
         view.setOnClickListener {
-            communicator!!.onClick(contactId)
+            communicator?.onClick(contactId)
         }
 
         return view
@@ -65,16 +55,5 @@ class ContactFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ContactFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
