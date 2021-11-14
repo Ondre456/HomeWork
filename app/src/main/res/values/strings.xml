@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">HomeWork</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="emails">emails</string>
+    <string name ="contactsList">Список контактов</string>
+    <string name ="contactDetails">Детали контакта</string>
+    <string name="numbers">Номера</string>
+    <string name="back">Назад</string>
 </resources>
